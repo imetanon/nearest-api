@@ -21,7 +21,8 @@ def image_predict():
     }
     r = requests.get('https://bit-noi-demo.herokuapp.com/predict', params=params)
 
-    result = r.result
+    result = r.json()
+    result = result.result
 
     contents = []
     contents.append(antenna_flex(result, image_url))
