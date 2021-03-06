@@ -370,8 +370,7 @@ def antenna_flex(result, image_url):
 
     bubble = {
         "type": "bubble",
-        "body": body,
-        "footer": footer
+        "body": body
     }
     
     return bubble
