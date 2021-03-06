@@ -5,3 +5,4 @@ geopandas
 shapely
 rtree
 geopy
+requests

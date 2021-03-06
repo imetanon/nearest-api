@@ -4,12 +4,45 @@ import pandas as pd
 import geopandas 
 from shapely.geometry import Point
 from geopy.distance import geodesic
+import requests
   
 app = Flask(__name__) 
   
 @app.route("/") 
 def home_view(): 
     return "<h1>Hello! my friends</h1>"
+
+@app.route("/image-predict") 
+def image_predict():
+    p_image_url = request.args.get('p_image_url')
+
+    params = {
+        "p_image_url": p_image_url
+    }
+    r = requests.get('https://bit-noi-demo.herokuapp.com/predict', params=params)
+
+    result = r.result
+
+    contents = []
+    contents.append(antenna_flex(result, image_url))
+
+    payload = {
+        "line_payload": [
+            {
+                "type": "flex",
+                "altText": "this is a flex message",
+                "contents": {
+                    "type": "carousel",
+                    "contents": contents
+                }
+            }
+        ]
+    }
+    json_payload = json.dumps(payload)
+    resp = Response(json_payload, status=200, mimetype='application/json')
+    resp.headers['Response-Type'] = "object"
+    
+    return resp
 
 
 @app.route("/nearest-check")
@@ -62,7 +95,6 @@ def get_distance(src_lat, src_long, des_lat, des_long):
     coords_1 = (float(src_lat), float(src_long))
     coords_2 = (float(des_lat), float(des_long))
     return geodesic(coords_1, coords_2).km
-
 
 def station_flex(name, address, distance):
     body = {
@@ -247,6 +279,93 @@ def station_flex(name, address, distance):
         ],
         "paddingAll": "20px",
         "spacing": "md"
+    }
+
+    bubble = {
+        "type": "bubble",
+        "body": body,
+        "footer": footer
+    }
+    
+    return bubble
+
+def antenna_flex(result, image_url):
+
+    body = {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+        {
+            "type": "image",
+            "url": image_url,
+            "size": "full",
+            "aspectMode": "cover",
+            "aspectRatio": "2:3",
+            "gravity": "top"
+        },
+        {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [],
+            "background": {
+            "type": "linearGradient",
+            "angle": "0deg",
+            "startColor": "#00000099",
+            "endColor": "#00000000"
+            },
+            "height": "60%",
+            "position": "absolute",
+            "width": "100%",
+            "offsetEnd": "0px",
+            "offsetBottom": "0px",
+            "offsetStart": "0px"
+        },
+        {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+            {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                {
+                    "type": "text",
+                    "text": "ผลการตรวจสอบ",
+                    "size": "md",
+                    "color": "#ffffff",
+                    "weight": "bold",
+                    "wrap": True,
+                    "decoration": "none"
+                }
+                ],
+                "alignItems": "center"
+            },
+            {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                {
+                    "type": "text",
+                    "text": f"{result.upper()}",
+                    "size": "xl",
+                    "color": "#ffffff",
+                    "weight": "bold",
+                    "wrap": True,
+                    "style": "normal"
+                }
+                ],
+                "alignItems": "center"
+            }
+            ],
+            "position": "absolute",
+            "offsetBottom": "0px",
+            "offsetStart": "0px",
+            "offsetEnd": "0px",
+            "paddingAll": "20px",
+            "paddingTop": "18px"
+        }
+        ],
+        "paddingAll": "0px"
     }
 
     bubble = {
