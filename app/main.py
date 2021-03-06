@@ -139,7 +139,7 @@ def station_flex(name, address, distance):
                     "type": "text",
                     "wrap": True,
                     "size": "md",
-                    "text": f"ระยะทาง {distance} กิโลเมตร"
+                    "text": f"ระยะทาง {distance:.2f} กิโลเมตร"
                 }
                 ],
                 "spacing": "sm",
