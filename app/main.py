@@ -43,8 +43,12 @@ def nearest_check():
     payload = {
         "line_payload": [
             {
-                "type": "carousel",
-                "contents": contents
+                "type": "flex",
+                "altText": "this is a flex message",
+                "contents": {
+                    "type": "carousel",
+                    "contents": contents
+                }
             }
         ]
     }
