@@ -1,0 +1,7 @@
+flask
+gunicorn
+pandas
+geopandas
+shapely
+rtree
+geopy
