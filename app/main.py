@@ -44,7 +44,7 @@ def nearest_check():
         "line_payload": [
             {
                 "type": "carousel",
-                "contents": []
+                "contents": contents
             }
         ]
     }
