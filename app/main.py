@@ -37,7 +37,7 @@ def nearest_check():
     contents = []
 
     for idx in top_five_df.index: 
-        contents.append(station_flex(top_five_df['station_name'][idx], top_five_df['station_address'][idx]))
+        contents.append(station_flex(top_five_df['station_name'][idx], top_five_df['station_address'][idx], top_five_df['distance'][idx]))
         print(top_five_df['station_name'][idx], top_five_df['station_address'][idx]) 
 
     payload = {
@@ -64,7 +64,7 @@ def get_distance(src_lat, src_long, des_lat, des_long):
     return geodesic(coords_1, coords_2).km
 
 
-def station_flex(name, address):
+def station_flex(name, address, distance):
     body = {
         "type": "box",
         "layout": "vertical",
@@ -105,6 +105,41 @@ def station_flex(name, address):
                     "text": name,
                     "weight": "bold",
                     "color": "#7F0019"
+                }
+                ],
+                "spacing": "sm",
+                "paddingBottom": "md"
+            },
+            {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                {
+                    "type": "box",
+                    "layout": "baseline",
+                    "contents": [
+                    {
+                        "type": "icon",
+                        "url": "https://cdn0.iconfinder.com/data/icons/map-asset-1/24/distance-512.png",
+                        "size": "xs"
+                    },
+                    {
+                        "type": "text",
+                        "text": "DISTANCE",
+                        "wrap": true,
+                        "color": "#aaaaaa",
+                        "size": "xs",
+                        "flex": 0,
+                        "weight": "bold"
+                    }
+                    ],
+                    "spacing": "sm"
+                },
+                {
+                    "type": "text",
+                    "wrap": true,
+                    "size": "md",
+                    "text": f"ระยะทาง {distance} กิโลเมตร"
                 }
                 ],
                 "spacing": "sm",
