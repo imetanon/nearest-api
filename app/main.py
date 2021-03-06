@@ -24,7 +24,7 @@ def image_predict():
     result = r.json()['result']
 
     contents = []
-    contents.append(antenna_flex(result, image_url))
+    contents.append(antenna_flex(result, p_image_url))
 
     payload = {
         "line_payload": [
