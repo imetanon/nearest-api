@@ -31,7 +31,7 @@ def nearest_check():
     intersect_station_df = geopandas.sjoin(user_gdf,location_gdf,how="left",op="contains")
     intersect_station_df['distance'] = intersect_station_df.apply(lambda x: get_distance(x.latitude, x.longitude, x.station_latitude, x.station_longitude), axis=1)
 
-    top_five_df = intersect_station_df.sort_values('distance').head(5).reset_index()[['station_name','station_address','station_latitude','station_longitude']]
+    top_five_df = intersect_station_df.sort_values('distance').head(5).reset_index()[['station_name','station_address','station_latitude','station_longitude','distance']]
     print(top_five_df)
 
     contents = []
