@@ -15,8 +15,8 @@ def home_view():
 @app.route("/nearest-check")
 def nearest_check():
 
-    latitude = request.args.get('lat', 0.0)
-    longtiude = request.args.get('long', 0.0)
+    latitude = request.args.get('p_latitude', 0.0)
+    longtiude = request.args.get('p_longitude', 0.0)
     radius = request.args.get('radius', 15)
 
     location_df = pd.read_csv("./datasets/station_location.csv") 
@@ -126,7 +126,7 @@ def station_flex(name, address, distance):
                     {
                         "type": "text",
                         "text": "DISTANCE",
-                        "wrap": true,
+                        "wrap": True,
                         "color": "#aaaaaa",
                         "size": "xs",
                         "flex": 0,
@@ -137,7 +137,7 @@ def station_flex(name, address, distance):
                 },
                 {
                     "type": "text",
-                    "wrap": true,
+                    "wrap": True,
                     "size": "md",
                     "text": f"ระยะทาง {distance} กิโลเมตร"
                 }
