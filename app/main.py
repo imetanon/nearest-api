@@ -22,6 +22,7 @@ def image_predict():
     r = requests.get('https://bit-noi-demo.herokuapp.com/predict', params=params)
 
     result = r.json()
+    print(result)
     result = result.result
 
     contents = []
