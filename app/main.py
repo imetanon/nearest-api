@@ -43,8 +43,9 @@ def nearest_check():
     payload = {
         "line_payload": [
             {
-                "type": "carousel",
-                "contents": contents
+                "type": "sticker",
+                "packageId": "11537",
+                "stickerId": "52002734"
             }
         ]
     }
