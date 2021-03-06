@@ -34,46 +34,22 @@ def nearest_check():
     top_five_df = intersect_station_df.sort_values('distance').head(5).reset_index()[['station_name','station_address','station_latitude','station_longitude']]
     print(top_five_df)
 
+    contents = []
+
     for idx in top_five_df.index: 
+        contents.append(station_flex(top_five_df['station_name'][idx], top_five_df['station_address'][idx]))
         print(top_five_df['station_name'][idx], top_five_df['station_address'][idx]) 
 
     payload = {
         "line_payload": [
             {
                 "type": "carousel",
-                "contents": [
-                    {
-                        "type": "bubble",
-                        "body": {
-                            "type": "box",
-                            "layout": "vertical",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "First bubble"
-                            }
-                            ]
-                        }
-                    },
-                    {
-                        "type": "bubble",
-                        "body": {
-                            "type": "box",
-                            "layout": "vertical",
-                            "contents": [
-                            {
-                                "type": "text",
-                                "text": "Second bubble"
-                            }
-                            ]
-                        }
-                    }
-                ]
+                "contents": []
             }
         ]
     }
-    js = json.dumps(data)
-    resp = Response(js, status=200, mimetype='application/json')
+    json_payload = json.dumps(payload)
+    resp = Response(json_payload, status=200, mimetype='application/json')
     resp.headers['Response-Type'] = "object"
     
     return resp
@@ -84,7 +60,7 @@ def get_distance(src_lat, src_long, des_lat, des_long):
     return geodesic(coords_1, coords_2).km
 
 
-def station_flex():
+def station_flex(name, address):
     body = {
         "type": "box",
         "layout": "vertical",
@@ -122,7 +98,7 @@ def station_flex():
                     "type": "text",
                     "wrap": True,
                     "size": "md",
-                    "text": "กรุงเทพ - Bangkok",
+                    "text": name,
                     "weight": "bold",
                     "color": "#7F0019"
                 }
@@ -157,7 +133,7 @@ def station_flex():
                 },
                 {
                     "type": "text",
-                    "text": "อาคารใบหยก 2 เขตราชเทวี กรุงเทพมหานคร",
+                    "text": address,
                     "wrap": True,
                     "size": "md"
                 }
